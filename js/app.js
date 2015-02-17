@@ -62,3 +62,4 @@ angular.module('AngChat').controller('RoomController',
         });
     }
 );
+
