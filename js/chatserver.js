@@ -1,10 +1,10 @@
-var express = require('express'), 
-app = express(), 
-http = require('http'), 
+var express = require('express'),
+app = express(),
+http = require('http'),
 server = http.createServer(app),
 io = require('socket.io').listen(server);
 
-server.listen(8080);
+server.listen(5050);
 
 //Store room in an object.
 var rooms = {};
@@ -99,7 +99,7 @@ io.sockets.on('connection', function (socket) {
 
 	// when the client emits 'sendchat', this listens and executes
 	socket.on('sendmsg', function (data) {
-		
+
 		var userAllowed = false;
 
 		//Check if user is allowed to send message.
