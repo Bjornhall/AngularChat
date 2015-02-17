@@ -1,9 +1,12 @@
 module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 
 	grunt.initConfig({
-		jshint:{
-			src: ['app.js'],
+		//pkg: grunt.file.readJSON('package.json'),
+		jshint: {
+			src: ['js/app.js'],
 			gruntfile: ['Gruntfile.js'],
 			options: {
 				curly:  true,
@@ -25,6 +28,25 @@ module.exports = function(grunt){
 					io:      false
 				}
 			}
+		},
+		/*concat: {
+			options: {
+				separator: "\n\n"
+			},
+			dist: {
+				src: ['js/*.js'], // taka úr controllers möppunni...
+				dest: 'js/angchat.js' //<%= pkg.name %>.js'
+			}
+		},*/
+		uglify: {
+			my_target: {
+				files: {
+					'js/angchat.min.js' : ['js/app.js']
+				}
+			}
 		}
 	});
+
+	// tasks
+	grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
 };
