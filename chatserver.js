@@ -4,7 +4,7 @@ http = require('http'),
 server = http.createServer(app),
 io = require('socket.io').listen(server);
 
-server.listen(5050);
+server.listen(8080);
 
 //Store room in an object.
 var rooms = {};
