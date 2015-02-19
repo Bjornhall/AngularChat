@@ -35,9 +35,23 @@ angular.module('AngChat').controller('LoginController',
 }]);
 
 angular.module('AngChat').controller('RoomsController',
-    function($scope, $location, $rootScope, $routeParams, socket){
-            $scope.rooms = ['Default Room'];
+    function($scope, $location, $rootScope, $routeParams, socket) {
+            $scope.rooms = [{name:'Default Room', id:1}];
             $scope.currentUser = $routeParams.user;
+
+            $scope.joinroom = function(roomId) {
+                if(roomId === undefined) {
+                    $scope.errorMessage = 'eitthvað.. room error'; // TODO: error message
+                } else {
+                    socket.emit('joinroom', roomId, function(allowed) {
+                        if(allowed) {
+                            $location.path('/room/' + $scope.currentUser + '/' + roomId);
+                        } else {
+                            $scope.errorMessage = 'error message'; // TODO: error message
+                        }
+                    })
+                }
+            }
     }
 );
 
@@ -54,12 +68,13 @@ angular.module('AngChat').controller('RoomController',
             $scope.currentUsers = users;
         });
 
-        socket.emit('joinroom', $scope.currentRoom, function (success, reason) {
+        /*socket.emit('joinroom', $scope.currentRoom, function (success, reason) {
+            console.log("joinroom");
             if (!success)
             {
                 $scope.errorMessage = reason;
             }
-        });
+        });*/
     }
 );
 
