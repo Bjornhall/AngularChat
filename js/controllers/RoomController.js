@@ -18,12 +18,13 @@ angular.module('AngChat').controller('RoomController',
             console.log('updatechat');
             console.log(roomName);
             console.log(messages);
+            $scope.messages = messages;
             //console.log(roomName);
             //console.log(messages);
         });
 
         $scope.sendmsg = function() {
-
+            console.log("Sendi skilanbod");
             var sendmessage = {roomName: $scope.currentRoom, msg: $scope.message};
             socket.emit('sendmsg', sendmessage);
         }

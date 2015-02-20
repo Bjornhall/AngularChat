@@ -1,17 +1,19 @@
 <div class="alert alert-danger" ng-cloak ng-show="errorMessage != ''">
     {{ errorMessage }}
 </div>
-
 <h3>Hi {{ currentUser }} - Room {{ currentRoom }}</h3>
 <div class="row">
 	<div class="col-md-9 chat">
-	    <!--<div ng-repeat=""></div>-->
+    	<div ng-repeat="message in messages">
+    		<div>{{message.nick}}</div>
+    		<div>{{message.message}}</div>
+    	</div>
 	</div>
 	<div class="col-md-3">
 	    <h4>Users in this room</h4>
 	    <div class="well">
-	        <ul>
-	            <li ng-repeat="user in currentUsers">{{ user }}</li>
+	        <ul ng-repeat="user in currentUsers">
+	            <li>{{ user }}</li>
 	        </ul>
 	    </div>
 	</div>
