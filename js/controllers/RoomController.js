@@ -27,6 +27,7 @@ angular.module('AngChat').controller('RoomController',
             console.log("Sendi skilanbod");
             var sendmessage = {roomName: $scope.currentRoom, msg: $scope.message};
             socket.emit('sendmsg', sendmessage);
+            $scope.message = '';
         }
 
         /*socket.emit('joinroom', $scope.currentRoom, function (success, reason) {
