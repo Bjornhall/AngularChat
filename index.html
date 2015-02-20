@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <title>Angular Chat</title>
 </head>
@@ -27,7 +28,14 @@
     </nav>
 
     <div class="container">
-        <div class="view" ng-view>
+        <div ng-controller="RoomsController" ng-show="showRoomList" class="ng-hide col-md-2 rooms-list">
+            <ul>
+                <li class="create-room"><a ng-click="joinroom('undefined')">Create Room</a></li>
+                <li ng-repeat="room in rooms"><a ng-click="joinroom(room)">{{ room }}</a></li>
+            </ul>
+        </div>
+
+        <div class="view col-md-10" ng-view>
             Augnablik ...
         </div>
     </div>

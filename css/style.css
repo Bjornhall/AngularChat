@@ -1,0 +1,20 @@
+html {
+
+}
+
+body {
+
+}
+
+.view {
+	background-color: #778344;
+}
+
+.chat {
+	height: 300px;
+	border: 1px solid #222;
+}
+
+.rooms-list {
+	background-color: #141917;
+}

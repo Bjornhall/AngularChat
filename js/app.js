@@ -16,6 +16,7 @@ angular.module('AngChat').controller('LoginController',
     ['$scope', '$location', '$rootScope', '$routeParams', 'socket',
     function($scope, $location, $rootScope, $routeParams, socket) {
 
+    $rootScope.showRoomList = false;
     $scope.errorMessage = '';
     $scope.nickname = '';
 
@@ -26,6 +27,7 @@ angular.module('AngChat').controller('LoginController',
                 socket.emit ('adduser', $scope.nickname, function(available) {
                     if(available){
                         $location.path('/rooms/' + $scope.nickname);
+                        $rootScope.showRoomList = true;
                     } else {
                         $scope.errorMessage = 'This nick is taken!';
                     }
@@ -36,20 +38,45 @@ angular.module('AngChat').controller('LoginController',
 
 angular.module('AngChat').controller('RoomsController',
     function($scope, $location, $rootScope, $routeParams, socket) {
-            $scope.rooms = [{name:'Default Room', id:1}];
             $scope.currentUser = $routeParams.user;
+            $scope.rooms = [];
 
-            $scope.joinroom = function(roomId) {
-                if(roomId === undefined) {
-                    $scope.errorMessage = 'eitthvað.. room error'; // TODO: error message
+            socket.emit('rooms');
+            socket.on('roomlist', function(roomlist) {
+
+                for(var room in roomlist) {
+
+                    if ($scope.rooms.length === 0) {
+                        $scope.rooms.push(room);
+                    } else if ($scope.rooms.length > 0) {
+                        for(var i = 0; i < $scope.rooms.length; i += 1) {
+                            if($scope.rooms[i] !== room && undefined !== room) {
+                                //console.log('if (' + $scope.rooms[i] + ' !== ' + room + ')');
+                                $scope.rooms.push(room);
+                            }
+                        }
+                    }
+                }
+                
+                //$scope.rooms = result;
+                //$scope.rooms = tempRooms;
+                //console.log(tempRooms);
+                console.log($scope.rooms);
+            });
+
+            $scope.joinroom = function(roomName) {
+
+                if(roomName === undefined) {
+                    // creating new room...
+                    //$scope.rooms
                 } else {
-                    socket.emit('joinroom', roomId, function(allowed) {
+                    socket.emit('joinroom', roomName, function(allowed, reason) {
                         if(allowed) {
-                            $location.path('/room/' + $scope.currentUser + '/' + roomId);
+                            $location.path('/room/' + $routeParams.user + '/' + roomName);
                         } else {
                             $scope.errorMessage = 'error message'; // TODO: error message
                         }
-                    })
+                    });
                 }
             }
     }
@@ -62,11 +89,28 @@ angular.module('AngChat').controller('RoomController',
         $scope.currentUser = $routeParams.user;
         $scope.currentUsers = [];
         $scope.errorMessage = '';
+        $scope.messages = [];
+        $scope.message = '';
 
         socket.on('updateusers', function (roomName, users, ops) {
+            console.log(users);
             // TODO: Check if the roomName equals the current room !
             $scope.currentUsers = users;
         });
+
+        socket.on('updatechat', function(roomName, messages) {
+            
+            //console.log(roomName);
+            console.log(messages);
+            //console.log(roomName);
+            //console.log(messages);
+        });
+
+        $scope.sendmsg = function() {
+
+            var sendmessage = {roomName: $scope.currentRoom, msg: $scope.message};
+            socket.emit('sendmsg', sendmessage);
+        }
 
         /*socket.emit('joinroom', $scope.currentRoom, function (success, reason) {
             console.log("joinroom");
