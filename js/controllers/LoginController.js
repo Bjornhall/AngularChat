@@ -3,6 +3,7 @@ angular.module('AngChat').controller('LoginController',
     function($scope, $location, $rootScope, $routeParams, socket) {
 
     $rootScope.showRoomList = false;
+    $rootScope.inRoom = false;
     $scope.errorMessage = '';
     $scope.nickname = '';
 

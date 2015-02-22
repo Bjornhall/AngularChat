@@ -9,6 +9,7 @@ angular.module('AngChat').controller('RoomController',
         $scope.message = '';
 
         socket.on('updateusers', function (roomName, users, ops) {
+            console.log('22222');
             console.log(users);
             // TODO: Check if the roomName equals the current room !
             $scope.currentUsers = users;
@@ -16,11 +17,9 @@ angular.module('AngChat').controller('RoomController',
 
         socket.on('updatechat', function(roomName, messages) {
             console.log('updatechat');
-            console.log(roomName);
             console.log(messages);
+            
             $scope.messages = messages;
-            //console.log(roomName);
-            //console.log(messages);
         });
 
         $scope.sendmsg = function() {
@@ -30,7 +29,7 @@ angular.module('AngChat').controller('RoomController',
             $scope.message = '';
         }
 
-        /*socket.emit('joinroom', $scope.currentRoom, function (success, reason) {
+        /*socket.emit('joinroom', { room: $scope.currentRoom }, function (success, reason) {
             console.log("joinroom");
             if (!success)
             {

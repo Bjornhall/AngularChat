@@ -1,6 +1,7 @@
 angular.module('AngChat').controller('RoomsController',
     function($scope, $location, $rootScope, $routeParams, socket) {
             $rootScope.showRoomList = true;
+            $scope.roomName = '';
             $scope.currentUser = $routeParams.user;
             $scope.rooms = [];
 
@@ -31,18 +32,23 @@ angular.module('AngChat').controller('RoomsController',
 
                 if(roomName === undefined) {
 
-
-
-                    // creating new room...
+                    // TODO: þarf þetta ?
                 } else {
                     socket.emit('joinroom', {room: roomName}, function(allowed, reason) {
                         if(allowed) {
+                            $rootScope.inRoom = true;
                             $location.path('/room/' + $routeParams.user + '/' + roomName);
                         } else {
                             $scope.errorMessage = 'error message'; // TODO: error message
                         }
                     });
                 }
+            }
+
+            $scope.partroom = function() {
+                $rootScope.inRoom = false;
+                socket.emit('partroom', $routeParams.room);
+                $location.path('/rooms/' + $routeParams.user);
             }
     }
 );

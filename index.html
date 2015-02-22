@@ -29,10 +29,15 @@
 
     <div class="container">
         <div ng-controller="RoomsController" ng-show="showRoomList" class="ng-hide col-md-2 rooms-list">
+            <form>
+                <input ng-model="roomName" />
+                <button ng-click="joinroom(roomName)">Create Room</button>
+            </form>
             <ul>
-                <li class="create-room"><a ng-click="joinroom('undefined')">Create Room</a></li>
+                <!--<li class="create-room"><a ng-click="joinroom(undefined)">Create Room</a></li>-->
                 <li ng-repeat="room in rooms"><a ng-click="joinroom(room)">{{ room }}</a></li>
             </ul>
+            <div ng-click="partroom()" ng-show="inRoom">Leave Room</div>
         </div>
 
         <div class="view col-md-10" ng-view>
