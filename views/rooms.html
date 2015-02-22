@@ -1,6 +1,41 @@
-<h3>Hi {{currentUser}} - Active chat rooms</h3>
-<div class="well">
-<!--    <ul ng-repeat="room in rooms">
-        <li><a ng-click="joinroom(room.id)">{{ room.name }}</a></li>
-    </ul>-->
+<div class="container clearfix">
+    <div class="top_of_page_container clearfix">
+        <div class="chat_header_container">
+            <h3 class="chat_header float_left">Hi <span class="chat_user">{{currentUser}}</span></h3>
+        </div>
+
+        <div class="available_rooms">
+            <h3 class="chat_header float-right">Available chat rooms</h3>
+        </div>
+    </div>
+
+    <div class="list_of_things">
+        <ul>
+            <li ng-repeat="room in rooms"><a class="chat_list_item" ng-click="joinroom(room)">{{ room }}</a></li>
+        </ul>
+    </div>
+
+    <div ng-click="partroom()" ng-show="inRoom">Leave Room</div>
+
+    <form class="create_room">
+        <input id="footer_form" placeholder="Create a new chat room . . . " ng-model="roomName" />
+        <button class="chat_btn create_btn" ng-click="joinroom(roomName)">Create Room</button>
+    </form>
 </div>
+
+
+
+
+<!-- Small modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm"><i class="glyphicon glyphicon-plus"></i></button>
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form class="create_room">
+                <input id="login_form" ng-model="roomName" />
+                <button class="chat_btn login_button" ng-click="joinroom(roomName)">Create Room</button>
+            </form>
+        </div>
+    </div>
+</div> -->

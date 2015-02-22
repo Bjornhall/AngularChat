@@ -25,7 +25,7 @@ angular.module('AngChat').controller('RoomsController',
                         }
                     }
                 }
-                
+
             });
 
             $scope.joinroom = function(roomName) {

@@ -1,26 +1,35 @@
-<div class="alert alert-danger" ng-cloak ng-show="errorMessage != ''">
-    {{ errorMessage }}
-</div>
-<h3>Hi {{ currentUser }} - Room {{ currentRoom }}</h3>
-<div class="row">
-	<div class="col-md-9 chat">
-    	<div ng-repeat="message in messages">
-    		<div>{{message.nick}}</div>
-    		<div>{{message.message}}</div>
-    	</div>
-	</div>
-	<div class="col-md-3">
-	    <h4>Users in this room</h4>
-	    <div class="well">
-	        <ul ng-repeat="user in currentUsers">
-	            <li>{{ user }}</li>
-	        </ul>
-	    </div>
-	</div>
-</div>
-<div class="row">
-	<form>
-		<input class="col-md-8" ng-model="message" />
-		<button class="col-md-1" ng-click="sendmsg(room.id)">Submit</button>
-	</form>
+<div class="container clearfix">
+    <div class="alert alert-danger" ng-cloak ng-show="errorMessage != ''">
+        {{ errorMessage }}
+    </div>
+
+    <div class="chat_header_container">
+        <h3 class="chat_header float_left">Hi <span class="chat_user">{{currentUser}}</span> - You are currenty in : <span class="chat_user">{{ currentRoom }}</span></h3>
+        <h3 class="chat_header chat_users">Users in this room</h4>
+    </div>
+
+    <div class="col-md-9 chat">
+        <div ng-repeat="message in messages">
+            <div class="single_message">
+                <div class="msg_header clearfix">
+                    <div class="msg_nick">{{message.nick}}</div>
+                    <div class="msg_timestamp">{{message.timestamp}}</div>
+                </div>
+                <div class="msg_content">{{message.message}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="list_of_things">
+            <ul ng-repeat="user in currentUsers">
+                <li>{{ user }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <form class="create_room">
+        <input id="footer_form" ng-model="message" />
+        <button class="chat_btn create_btn" ng-click="sendmsg(room.id)">Send</button>
+    </form>
 </div>

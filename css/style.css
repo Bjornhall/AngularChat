@@ -3,18 +3,246 @@ html {
 }
 
 body {
+    background: #7695ef; /* Old browsers */
+    background: -moz-linear-gradient(left,  #7695ef 0%, #b98aea 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#7695ef), color-stop(100%,#b98aea)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  #7695ef 0%,#b98aea 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  #7695ef 0%,#b98aea 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  #7695ef 0%,#b98aea 100%); /* IE10+ */
+    background: linear-gradient(to right,  #7695ef 0%,#b98aea 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7695ef', endColorstr='#b98aea',GradientType=1 ); /* IE6-9 */
+}
 
+/*=================================================
+Clearfix
+===================================================*/
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/*=================================================
+End Clearfix
+===================================================*/
+
+.float_right{
+    float:right;
+}
+
+.float_left {
+    float:left;
+}
+
+.chat_header {
+    color: #fff;
+    font-weight: 100;
+    font-size: 2.5em;
+}
+
+.chat_users {
+    text-align: right;
+    width:30%;
+    float:right;
 }
 
 .view {
-	background-color: #778344;
+	background-color: #D6EEF9;
 }
 
 .chat {
-	height: 300px;
-	border: 1px solid #222;
+	height:auto;
+
+	/*border: 1px solid rgba(0,0,0,0.2);*/
+}
+
+.login_wrapper {
+    width:100%;
+}
+
+#login_head {
+    color: #fff;
+    font-size: 4em;
+    font-weight: 100;
+    text-align: center;
+    margin: 2em;
+}
+
+.chat_user {
+    font-weight: 200;
+    color:#AFFFED;
+}
+
+.chat_header_container {
+    float:left;
+    width:48%;
+}
+
+.available_rooms {
+    float:right;
+    width:50%;
+}
+
+#login_form {
+    text-align: center;
+    margin:auto;
+    width:50%;
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    border-radius: none;
+    padding:1em;
+    color:#fff;
+    background-color:rgba(255,255,255, 0.3);
+
+    /* Remove box shadow */
+    background-image: none;
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none,none;
+    -o-transition: none, none;
+    transition: none, none;
+}
+
+#footer_form {
+    float: left;
+    width: 75%;
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    border-radius: none;
+    padding: 1em;
+
+    color:#fff;
+    background-color:rgba(255,255,255, 0.5);
+
+    /* Remove box shadow */
+    background-image: none;
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none,none;
+    -o-transition: none, none;
+    transition: none, none;
+}
+
+.chat_btn {
+    width: 25%;
+    font-size: 2em;
+    text-align: center;
+    font-weight: 200;
+    border:none;
+    background-color: rgb(40, 125, 178);
+    color:#fff;
+    border-radius: 2px;
+}
+
+.chat_btn.create_btn {
+    padding: 0.65em;
+}
+
+.login_button {
+    margin:auto;
+    display: inherit;
+}
+
+.alert_message {
+    font-size: 2.5em;
+    font-weight: 100;
+    text-align: center;
+    color: #BAF2FF;
+    /* text-transform: uppercase; */
+    margin: 1em;
+
+    -webkit-animation-duration: 0.8s;
+    -webkit-animation-iteration-count: 3;
 }
 
 .rooms-list {
-	background-color: #141917;
+	background-color: #D6EEF9;
 }
+
+.single_message {
+    border-radius: 10px;
+    margin: 1em 0em;
+    padding: 0.2em 1em;
+    width:100%;
+    background-color: rgba(124,152,233, 05);
+}
+
+.single_message .msg_nick {
+    font-size: 1.3em;
+    float:left;
+    width:45%;
+    color:#FBFFBD;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.single_message .msg_timestamp {
+    text-align: right;
+    color:rgba(0,0,0,0.2);;
+    float:right;
+    width:50%;
+}
+
+.single_message .msg_content {
+    color:#fff;
+    margin-left: 1em;
+}
+
+.create_room {
+    position:fixed;
+    bottom:0;
+    width:1170px;
+}
+
+.list_of_things{
+    width:100%;
+}
+
+.list_of_things ul {
+    float:right;
+}
+
+.list_of_things ul li {
+    text-align: right;
+    list-style: none;
+}
+
+a.chat_list_item.ng-binding {
+    color:#fff;
+    font-size: 2em;
+}
+
+a.chat_list_item.ng-binding:hover {
+    color:#BAF2FF;
+}
+
+li.ng-binding {
+    color:#fff;
+    font-size: 2em;
+}
+
+.chat_list_item {
+    color:#fff !important;
+    font-size: 1.5em !important;
+}
+
+.list_of_things ul li a:hover {
+    color:#287DB2;
+}
+.available_rooms h3 {
+    float:right;
+}
+
+
+

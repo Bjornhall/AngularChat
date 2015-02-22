@@ -8,6 +8,7 @@ angular.module('AngChat').controller('RoomController',
         $scope.messages = [];
         $scope.message = '';
 
+
         socket.on('updateusers', function (roomName, users, ops) {
             console.log('22222');
             console.log(users);
@@ -18,7 +19,7 @@ angular.module('AngChat').controller('RoomController',
         socket.on('updatechat', function(roomName, messages) {
             console.log('updatechat');
             console.log(messages);
-            
+
             $scope.messages = messages;
         });
 

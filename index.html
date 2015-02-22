@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="bower_components/animate.css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css?v=2">
 
     <title>Angular Chat</title>
 </head>
 <body ng-app="AngChat">
     <nav class="navbar navbar-inverse">
         <div class="container">
+
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -17,8 +19,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ChatClient</a>
+                <a class="navbar-brand" href="/">ChatClient</a>
             </div>
+
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#/">Back to login</a></li>
@@ -27,25 +30,12 @@
         </div>
     </nav>
 
-    <div class="container">
-        <div ng-controller="RoomsController" ng-show="showRoomList" class="ng-hide col-md-2 rooms-list">
-            <form>
-                <input ng-model="roomName" />
-                <button ng-click="joinroom(roomName)">Create Room</button>
-            </form>
-            <ul>
-                <!--<li class="create-room"><a ng-click="joinroom(undefined)">Create Room</a></li>-->
-                <li ng-repeat="room in rooms"><a ng-click="joinroom(room)">{{ room }}</a></li>
-            </ul>
-            <div ng-click="partroom()" ng-show="inRoom">Leave Room</div>
-        </div>
-
-        <div class="view col-md-10" ng-view>
-            Augnablik ...
-        </div>
+    <div ng-view>
+        Augnablik ...
     </div>
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="bower_components/socket.io-client/dist/socket.io.min.js"></script>

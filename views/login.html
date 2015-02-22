@@ -1,21 +1,15 @@
-<div class="container">
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">Choose your nick</div>
-            <div class="panel-body">
+<div class="container login_container">
+    <div class="login_header animated fadeInDown"><h1 id="login_head">Choose your nick</h1></div>
+    <div class="login_content">
 
-                <h2>{{message}}</h2>
-                <div class="alert alert-danger" ng-cloak ng-show="errorMessage != ''">
-                    {{errorMessage}}
-                </div>
+        <div class="form-group login_wrapper clearfix">
+            <input placholder="Enter nick here . ." id="login_form" type="text" class="form-control" id="nickname" name="nickname" ng-model="nickname" />
+            <button type="button" class="chat_btn login_button" ng-click="login()">Enter chat</button>
+        </div>
 
-                <div class="form-group">
-                    <label for="nickname" class="control-label">Nick-name</label>
-                    <input type="text" class="form-control" id="nickname" name="nickname" ng-model="nickname" />
-                </div>
-
-                <button type="button" class="btn btn-primary" ng-click="login()">Enter chat</button>
-            </div>
+        <h2>{{message}}</h2>
+        <div class="alert_message animated fadeIn" ng-cloak ng-show="errorMessage != ''">
+            {{errorMessage}}
         </div>
     </div>
 </div>
