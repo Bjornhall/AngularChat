@@ -118,7 +118,8 @@ End Clearfix
     width: 75%;
     font-size: 1.5em;
     margin-bottom: 1em;
-    border-radius: none;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
     padding: 1em;
 
     color:#fff;
@@ -142,11 +143,12 @@ End Clearfix
     border:none;
     background-color: rgb(40, 125, 178);
     color:#fff;
-    border-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
 }
 
 .chat_btn.create_btn {
-    padding: 0.65em;
+    padding: 0.58em;
 }
 
 .login_button {
