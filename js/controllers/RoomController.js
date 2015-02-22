@@ -30,6 +30,12 @@ angular.module('AngChat').controller('RoomController',
             $scope.message = '';
         }
 
+        $scope.partroom = function() {
+                $rootScope.inRoom = false;
+                socket.emit('partroom', $routeParams.room);
+                $location.path('/rooms/' + $routeParams.user);
+        }
+
         /*socket.emit('joinroom', { room: $scope.currentRoom }, function (success, reason) {
             console.log("joinroom");
             if (!success)
