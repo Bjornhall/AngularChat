@@ -16,7 +16,7 @@ angular.module('AngChat').controller('LoginController',
                         $location.path('/rooms/' + $scope.nickname);
                         $rootScope.showRoomList = true;
                     } else {
-                        $scope.errorMessage = 'This nick is taken!';
+                        $scope.errorMessage = 'Unfortunately is this nick is taken!. Please choose another nickname';
                     }
             });
         }
