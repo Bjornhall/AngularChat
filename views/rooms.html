@@ -15,13 +15,16 @@
         </ul>
     </div>
 
-    <div ng-click="partroom()" ng-show="inRoom">Leave Room</div>
+    <div class="alert_message animated fadeIn" ng-cloak ng-show="errorMessage != ''">
+        {{errorMessage}}
+    </div>
 
     <form class="create_room">
         <input id="footer_form" placeholder="Create a new chat room . . . " ng-model="roomName" />
         <button class="chat_btn create_btn" ng-click="joinroom(roomName)">Create Room</button>
     </form>
 </div>
+
 
 
 

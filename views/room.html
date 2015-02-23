@@ -10,9 +10,9 @@
 
     <div class="col-md-9 chat">
         <div ng-repeat="message in messages">
-            <div class="single_message">
+            <div class="single_message animation-repeat">
                 <div class="msg_header clearfix">
-                    <div class="msg_nick">{{message.nick}}</div>
+                    <div class="msg_nick">{{message.nick}}<span>says :</span></div>
                     <div class="msg_timestamp">{{message.timestamp}}</div>
                 </div>
                 <div class="msg_content">{{message.message}}</div>

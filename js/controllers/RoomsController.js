@@ -31,7 +31,7 @@ angular.module('AngChat').controller('RoomsController',
             $scope.joinroom = function(roomName) {
 
                 if(roomName === undefined) {
-
+                    $scope.errorMessage = 'Please input a name for your channel!';
                     // TODO: þarf þetta ?
                 } else {
                     socket.emit('joinroom', {room: roomName}, function(allowed, reason) {
