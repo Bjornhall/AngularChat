@@ -10,9 +10,9 @@
     </div>
 
     <div class="list_of_things">
-        <ul>
+        <ul ng-repeat="room in rooms">
         <!--    <li ng-repeat="room in rooms"><a class="chat_list_item" ng-click="joinRoom(room)">{{ room }}</a></li>    -->
-        <li ng-repeat="room in rooms"><a class="chat_list_item" ng-href="#/room/{{currentUser}}/{{room}}">{{room}}</a></li>
+        <li><a class="chat_list_item" ng-href="#/room/{{currentUser}}/{{room}}">{{room}}</a></li>
         </ul>
     </div>
 

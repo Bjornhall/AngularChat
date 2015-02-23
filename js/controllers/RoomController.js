@@ -9,7 +9,6 @@ angular.module('AngChat').controller('RoomController',
         $scope.message = '';
 
         socket.emit('joinroom', { room: $scope.currentRoom }, function (success, reason) {
-            console.log("joinroom");
             if (!success)
             {
                 $scope.errorMessage = reason;
@@ -21,6 +20,7 @@ angular.module('AngChat').controller('RoomController',
         socket.on('updateusers', function (roomName, users, ops) {
             // TODO: Check if the roomName equals the current room !
             $scope.currentUsers = users;
+            console.log(users);
         });
 
         socket.on('updatechat', function(roomName, messages) {
@@ -35,9 +35,13 @@ angular.module('AngChat').controller('RoomController',
         }
 
         $scope.partroom = function() {
-                $rootScope.inRoom = false;
+                $rootScope.inRoom = false; // TODO: þarf ekki...
                 socket.emit('partroom', $routeParams.room);
+
+
                 $location.path('/rooms/' + $routeParams.user);
         }
+
+        
     }
 );
