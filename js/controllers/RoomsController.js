@@ -3,32 +3,34 @@ angular.module('AngChat').controller('RoomsController',
             $rootScope.showRoomList = true;
             $scope.roomName = '';
             $scope.currentUser = $routeParams.user;
+            //$scope.room = $routeParams.room;
             $scope.rooms = [];
 
             socket.emit('rooms');
             socket.on('roomlist', function(roomlist) {
-                console.log(roomlist);
                 for(var room in roomlist) {
 
-                    if ($scope.rooms.length === 0 && undefined !== room) {
-
+                    if(!exists(room)) {
                         $scope.rooms.push(room);
+                    }
+                }
+            });
 
-                    } else if ($scope.rooms.length > 0) {
-
-                        for(var i = 0; i < $scope.rooms.length; i += 1) {
-
-                            if($scope.rooms[i] !== room && undefined !== room) {
-
-                                $scope.rooms.push(room);
-                            }
-                        }
+            exists = function(roomName) {
+                for(var i = 0; i < $scope.rooms.length; i++) {
+                    if($scope.rooms[i] === roomName) {
+                        return true;
                     }
                 }
 
-            });
+                return false;
+            }
 
-            $scope.joinroom = function(roomName) {
+            $scope.createRoom = function() {
+                $location.path('/room/' + $scope.currentUser + '/' + $scope.roomName);
+            }
+
+/*            $scope.joinRoom = function(roomName) {
 
                 if(roomName === undefined) {
                     $scope.errorMessage = 'Please input a name for your channel!';
@@ -45,10 +47,10 @@ angular.module('AngChat').controller('RoomsController',
                 }
             }
 
-            $scope.partroom = function() {
+            $scope.partRoom = function() {
                 $rootScope.inRoom = false;
                 socket.emit('partroom', $routeParams.room);
                 $location.path('/rooms/' + $routeParams.user);
-            }
+            }*/
     }
 );

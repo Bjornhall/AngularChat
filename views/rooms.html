@@ -10,8 +10,9 @@
     </div>
 
     <div class="list_of_things">
-        <ul>
-            <li ng-repeat="room in rooms"><a class="chat_list_item" ng-click="joinroom(room)">{{ room }}</a></li>
+        <ul ng-repeat="room in rooms">
+        <!--    <li ng-repeat="room in rooms"><a class="chat_list_item" ng-click="joinRoom(room)">{{ room }}</a></li>    -->
+        <li><a class="chat_list_item" ng-href="#/room/{{currentUser}}/{{room}}">{{room}}</a></li>
         </ul>
     </div>
 
@@ -19,9 +20,11 @@
         {{errorMessage}}
     </div>
 
+    <div ng-click="partRoom()" ng-show="inRoom">Leave Room</div>
+
     <form class="create_room">
         <input id="footer_form" placeholder="Create a new chat room . . . " ng-model="roomName" />
-        <button class="chat_btn create_btn" ng-click="joinroom(roomName)">Create Room</button>
+        <button class="chat_btn create_btn" ng-click="createRoom()">Create Room</button>
     </form>
 </div>
 

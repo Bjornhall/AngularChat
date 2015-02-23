@@ -82,6 +82,16 @@ End Clearfix
     color:#AFFFED;
 }
 
+.kick {
+    padding: 4px 2px;
+    background-color: yellow;
+}
+
+.ban {
+    padding: 4px 2px;
+    background-color: red;
+}
+
 .chat_header_container {
     float:left;
     width:48%;
@@ -154,6 +164,7 @@ End Clearfix
 .login_button {
     margin:auto;
     display: inherit;
+    border-radius: 2px;
 }
 
 .alert_message {

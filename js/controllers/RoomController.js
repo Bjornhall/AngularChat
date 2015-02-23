@@ -4,44 +4,64 @@ angular.module('AngChat').controller('RoomController',
         $scope.currentRoom = $routeParams.room;
         $scope.currentUser = $routeParams.user;
         $scope.currentUsers = [];
+        $scope.currentOps = [];
         $scope.errorMessage = '';
         $scope.messages = [];
         $scope.message = '';
+        $scope.isOp = false;
 
+        socket.emit('joinroom', { room: $scope.currentRoom }, function (success, reason) {
+            if (!success)
+            {
+                $scope.errorMessage = reason;
+            } else {
+                $rootScope.inRoom = true;
+            }
+        });
 
         socket.on('updateusers', function (roomName, users, ops) {
-            console.log('22222');
-            console.log(users);
             // TODO: Check if the roomName equals the current room !
-            $scope.currentUsers = users;
+            if(roomName === $scope.currentRoom) {
+                $scope.currentUsers = users;
+                $scope.currentOps = ops;
+            }
+
+            console.log($scope.currentUsers);
+            console.log($scope.currentOps);
         });
 
         socket.on('updatechat', function(roomName, messages) {
-            console.log('updatechat');
-            console.log(messages);
-
-            $scope.messages = messages;
+            if(roomName === $scope.currentRoom) {
+                $scope.messages = messages;
+            }
         });
 
         $scope.sendmsg = function() {
-            console.log("Sendi skilanbod");
             var sendmessage = {roomName: $scope.currentRoom, msg: $scope.message};
             socket.emit('sendmsg', sendmessage);
             $scope.message = '';
         }
 
         $scope.partroom = function() {
-                $rootScope.inRoom = false;
+                $rootScope.inRoom = false; // TODO: þarf ekki...
+
+                if(hasop($scope.currentUser) && $scope.currentUsers.length > 0) {
+                    $scope.currentOps.push($scope.currentUsers.shift());
+                    $scope.isOp = false;
+                }
+
                 socket.emit('partroom', $routeParams.room);
                 $location.path('/rooms/' + $routeParams.user);
         }
 
-        /*socket.emit('joinroom', { room: $scope.currentRoom }, function (success, reason) {
-            console.log("joinroom");
-            if (!success)
-            {
-                $scope.errorMessage = reason;
+        hasop = function(username) {
+            for(var i = 0; i < $scope.currentOps.length; i++) {
+                if($scope.currentOps[i] === username) {
+                    return true;
+                }
             }
-        });*/
+
+            return false;
+        }
     }
 );
