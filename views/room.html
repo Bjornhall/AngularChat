@@ -13,7 +13,7 @@
             <div class="single_message">
                 <div class="msg_header clearfix">
                     <div class="msg_nick">{{message.nick}}</div>
-                    <div class="msg_timestamp">{{message.timestamp}}</div>
+                    <div class="msg_timestamp">{{message.timestamp | date:'MM/dd/yyyy @ h:mma'}}</div>
                 </div>
                 <div class="msg_content">{{message.message}}</div>
             </div>
