@@ -3,6 +3,7 @@ angular.module('AngChat').controller('RoomsController',
             $rootScope.showRoomList = true;
             $scope.roomName = '';
             $scope.currentUser = $routeParams.user;
+            //$scope.room = $routeParams.room;
             $scope.rooms = [];
 
             socket.emit('rooms');
@@ -25,10 +26,13 @@ angular.module('AngChat').controller('RoomsController',
                         }
                     }
                 }
-
             });
 
-            $scope.joinroom = function(roomName) {
+            $scope.createRoom = function() {
+                $location.path('/room/' + $scope.currentUser + '/' + $scope.roomName);
+            }
+
+/*            $scope.joinRoom = function(roomName) {
 
                 if(roomName === undefined) {
 
@@ -45,10 +49,10 @@ angular.module('AngChat').controller('RoomsController',
                 }
             }
 
-            $scope.partroom = function() {
+            $scope.partRoom = function() {
                 $rootScope.inRoom = false;
                 socket.emit('partroom', $routeParams.room);
                 $location.path('/rooms/' + $routeParams.user);
-            }
+            }*/
     }
 );

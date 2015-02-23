@@ -154,6 +154,7 @@ End Clearfix
 .login_button {
     margin:auto;
     display: inherit;
+    border-radius: 2px;
 }
 
 .alert_message {

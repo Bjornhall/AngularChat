@@ -8,23 +8,27 @@ angular.module('AngChat').controller('RoomController',
         $scope.messages = [];
         $scope.message = '';
 
+        socket.emit('joinroom', { room: $scope.currentRoom }, function (success, reason) {
+            console.log("joinroom");
+            if (!success)
+            {
+                $scope.errorMessage = reason;
+            } else {
+                $rootScope.inRoom = true;
+            }
+        });
 
         socket.on('updateusers', function (roomName, users, ops) {
-            console.log('22222');
-            console.log(users);
             // TODO: Check if the roomName equals the current room !
             $scope.currentUsers = users;
         });
 
         socket.on('updatechat', function(roomName, messages) {
-            console.log('updatechat');
-            console.log(messages);
 
             $scope.messages = messages;
         });
 
         $scope.sendmsg = function() {
-            console.log("Sendi skilanbod");
             var sendmessage = {roomName: $scope.currentRoom, msg: $scope.message};
             socket.emit('sendmsg', sendmessage);
             $scope.message = '';
@@ -35,13 +39,5 @@ angular.module('AngChat').controller('RoomController',
                 socket.emit('partroom', $routeParams.room);
                 $location.path('/rooms/' + $routeParams.user);
         }
-
-        /*socket.emit('joinroom', { room: $scope.currentRoom }, function (success, reason) {
-            console.log("joinroom");
-            if (!success)
-            {
-                $scope.errorMessage = reason;
-            }
-        });*/
     }
 );
