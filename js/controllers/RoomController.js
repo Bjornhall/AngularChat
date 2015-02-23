@@ -4,9 +4,11 @@ angular.module('AngChat').controller('RoomController',
         $scope.currentRoom = $routeParams.room;
         $scope.currentUser = $routeParams.user;
         $scope.currentUsers = [];
+        $scope.currentOps = [];
         $scope.errorMessage = '';
         $scope.messages = [];
         $scope.message = '';
+        $scope.isOp = false;
 
         socket.emit('joinroom', { room: $scope.currentRoom }, function (success, reason) {
             if (!success)
@@ -19,13 +21,19 @@ angular.module('AngChat').controller('RoomController',
 
         socket.on('updateusers', function (roomName, users, ops) {
             // TODO: Check if the roomName equals the current room !
-            $scope.currentUsers = users;
-            console.log(users);
+            if(roomName === $scope.currentRoom) {
+                $scope.currentUsers = users;
+                $scope.currentOps = ops;
+            }
+
+            console.log($scope.currentUsers);
+            console.log($scope.currentOps);
         });
 
         socket.on('updatechat', function(roomName, messages) {
-
-            $scope.messages = messages;
+            if(roomName === $scope.currentRoom) {
+                $scope.messages = messages;
+            }
         });
 
         $scope.sendmsg = function() {
@@ -36,12 +44,24 @@ angular.module('AngChat').controller('RoomController',
 
         $scope.partroom = function() {
                 $rootScope.inRoom = false; // TODO: þarf ekki...
+
+                if(hasop($scope.currentUser) && $scope.currentUsers.length > 0) {
+                    $scope.currentOps.push($scope.currentUsers.shift());
+                    $scope.isOp = false;
+                }
+
                 socket.emit('partroom', $routeParams.room);
-
-
                 $location.path('/rooms/' + $routeParams.user);
         }
 
-        
+        hasop = function(username) {
+            for(var i = 0; i < $scope.currentOps.length; i++) {
+                if($scope.currentOps[i] === username) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 );

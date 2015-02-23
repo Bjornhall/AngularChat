@@ -8,7 +8,6 @@ angular.module('AngChat').controller('RoomsController',
 
             socket.emit('rooms');
             socket.on('roomlist', function(roomlist) {
-
                 for(var room in roomlist) {
 
                     if(!exists(room)) {
