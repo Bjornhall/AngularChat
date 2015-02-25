@@ -6,6 +6,7 @@ angular.module('AngChat').controller('RoomController',
         $scope.currentUsers = [];
         $scope.currentOps = [];
         $scope.errorMessage = '';
+        $scope.successMessage = '';
         $scope.messages = [];
         $scope.message = '';
         $scope.isOp = false;
@@ -63,6 +64,9 @@ angular.module('AngChat').controller('RoomController',
         socket.on('kicked', function (roomName, kickedUser, kickingUser) {
             if($scope.currentUser === kickedUser && $scope.currentRoom === roomName) {
 
+                $rootScope.roomErrorMessage = 'You got kicked!';
+                //alert($rootScope.roomErrorMessage);
+
                 // TODO: henda upp einhverju pop-up og segja að honum hafi verið sparkað..?
                 $rootScope.inRoom = false;
                 $location.path('/rooms/' + $scope.currentUser);
@@ -72,6 +76,7 @@ angular.module('AngChat').controller('RoomController',
         socket.on('banned', function (roomName, bannedUser, banningUser) {
             if ($scope.currentUser === bannedUser && $scope.currentRoom === roomName) {
 
+                $rootScope.roomErrorMessage = 'You got banned from that room!';
                 // TODO: henda upp einhverju pop-up og segja að hann hafi verið bannaður..?
                 $rootScope.inRoom = false;
                 $location.path('/rooms/' + $scope.currentUser);
@@ -81,6 +86,9 @@ angular.module('AngChat').controller('RoomController',
         socket.on('opped', function (roomName, oppedUser, oppingUser) {
             if ($scope.currentUser === oppedUser && $scope.currentRoom === roomName) {
                 $scope.isOp = true;
+                $scope.successMessage = 'You got opped by ' + oppingUser;
+            } else {
+                //$scope.errorMessage = oppingUser + ' tried to make you op but something failed!';
             }
             // TODO: do stuff...
         });
@@ -88,6 +96,9 @@ angular.module('AngChat').controller('RoomController',
         socket.on('deopped', function (roomName, deoppedUser, deoppingUser) {
             if ($scope.currentUser === deoppedUser && $scope.currentRoom === roomName) {
                 $scope.isOp = false;
+                $scope.errorMessage = deoppingUser + ' took away your op rights!';
+            } else {
+                $scope.errorMessage = deoppingUser + ' tried to take away your op rights but failed!';
             }
             // TODO: do stuff...
         });
@@ -163,9 +174,9 @@ angular.module('AngChat').controller('RoomController',
         $scope.kick = function (kickUser) {
             socket.emit('kick', {user: kickUser, room: $scope.currentRoom}, function (success) {
                 if(success) {
-                    // TODO: höndla success
+                    $scope.successMessage = 'You just kicked ' + kickUser + ' out of this room!';
                 } else {
-                    // TODO: höndla!!!
+                    $scope.errorMessage = 'For some reason you were not able to kick ' + kickUser + ' out!';
                 }
             });
         };
@@ -173,9 +184,10 @@ angular.module('AngChat').controller('RoomController',
         $scope.ban = function (banUser) {
             socket.emit('ban', {user: banUser, room: $scope.currentRoom}, function (success) {
                 if(success) {
-                    // TODO: höndla success.. pop-up jafnvel: "þú bannaðir þennan aumingja.."
+                     $scope.successMessage = 'You just banned ' + banUser + ' from this room!';
                 } else {
                     // TODO: höndla!!!
+                    $scope.errorMessage = 'For some reason you were not able to ban ' + banUser + ' from this room!';
                 }
             });
         };
@@ -183,9 +195,10 @@ angular.module('AngChat').controller('RoomController',
         $scope.op = function (opUser) {
             socket.emit('op', {user: opUser, room: $scope.currentRoom}, function (success) {
                 if (success) {
-                    // TODO: höndla?
+                    $scope.successMessage = 'You just opped ' + opUser;
                 } else {
                     // TODO: höndla!!!
+                    $scope.errorMessage = 'For some reason you could not give op to ' + opUser;
                 }
             });
         };
@@ -193,9 +206,10 @@ angular.module('AngChat').controller('RoomController',
         $scope.deop = function (deopUser) {
             socket.emit('deop', {user: deopUser, room: $scope.currentRoom}, function (success) {
                 if (success) {
-                    // TODO: höndla?
+                    $scope.successMessage = 'You just de-opped ' + deopUser;
                 } else {
                     // TODO: höndla!!!
+                    $scope.errorMessage = 'For some reason you could not de-op ' + deopUser;
                 }
             });
         };
@@ -206,7 +220,9 @@ angular.module('AngChat').controller('RoomController',
                 socket.emit('setpassword', {room: $scope.currentRoom, password: $scope.pw1}, function (success) {
                     if (success) {
                         $rootScope.isPassword = true;
+                        $scope.show_password_form = false;
                         // TODO: eitthvað..
+                        $scope.successMessage = 'A new password has been set for this room!';
                     } else {
                         $scope.errorMessage = 'Oops.. something went wrong. Not able to set password.';
                         // TODO: eitthvað....
@@ -221,6 +237,7 @@ angular.module('AngChat').controller('RoomController',
                     if (success) {
                         $rootScope.isPassword = false;
                         // TODO:...
+                        $scope.successMessage = 'Password removed!';
                     } else {
                         $scope.errorMessage = 'Dang it! Looks like we still have a password!';
                         // TODO:...
@@ -228,6 +245,10 @@ angular.module('AngChat').controller('RoomController',
                 });
             }
         };
+
+        $scope.show_password = function() {
+            $scope.show_password_form = true;
+        }
 
         var toggleSidebar = function () {
 

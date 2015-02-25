@@ -1,23 +1,28 @@
 <div id="site-menu">
 
     <h2>Private Messages</h2>
-    <button ng-click="closePrivateMsgSidebar()">X</button>
-    <div ng-repeat="msg in pMessages">
-        <div>{{msg.from}}</div>
-        <div>{{msg.msg}}</div>
-    </div>
-    <div class="private-message-form">
+    <button id="close_chat"ng-click="closePrivateMsgSidebar()">X</button>
+
+    <div class="private-message-form clearfix">
         <div>Send message to: <span>{{pUser}}</span></div>
-        <form action="">
-            <input ng-model="pMessage">
-            <button ng-click="sendPrivateMessage()">Send</button>
-        </form>
+
+        <input ng-model="pMessage">
+        <button ng-click="sendPrivateMessage()">Send</button>
+    </div>
+
+    <div class="pMessage-container" ng-repeat="msg in pMessages">
+        <div id="from">{{msg.from}}</div>
+        <div id="msg">{{msg.msg}}</div>
     </div>
 </div>
 
 <div class="container clearfix">
     <div class="alert alert-danger" ng-cloak ng-show="errorMessage != ''">
         {{ errorMessage }}
+    </div>
+
+    <div class="alert alert-success" ng-cloak ng-show="successMessage != ''">
+        {{ successMessage }}
     </div>
 
     <div class="chat_header_container">
@@ -36,43 +41,35 @@
     </div>
 
     <div class="col-md-3">
-        <div class="list_of_things">
+        <div class="list_of_things clearfix">
             <ul ng-repeat="op in currentOps">
                 <li>{{ op }}
                     <div ng-show="isOp">
-                        <div class="deop" ng-click="deop( op )">de-op</div>
+                        <div class="chat_operations" ng-click="deop( op )">de-op<i class="fa fa-times"></i></div>
                     </div>
                 </li>
             </ul>
             <ul  id="the_room_users" ng-repeat="user in currentUsers">
-                <li ng-click="showPmessage(user)">{{ user }}
-                    <div ng-show="isOp">
-                        <div class="kick" ng-click="kick( user )">kick</div>
-                        <div class="ban" ng-click="ban( user )">ban</div>
-                        <div class="op" ng-click="op( user )">op</div>
-                    </div>
-                </li>
+                <li ng-click="showPmessage(user)">{{ user }}</li>
+                <div id="operations"ng-show="isOp">
+                    <div class="chat_operation" ng-click="kick( user )"><i class="fa fa-times"></i></div>
+                    <div class="chat_operation" ng-click="ban( user )"><i class="fa fa-ban"></i></div>
+                    <div class="chat_operation" ng-click="op( user )"><i class="fa fa-thumbs-up"></i></div>
+                </div>
             </ul>
-            <ul>
-                <li ng-show="isOp">
-                    <form ng-hide="isPassword">
-                        Password: <input placeholder="Enter password . . ." type="password" ng-model="pw1" />
-                        Re-enter: <input placeholder="Re-enter password . . ." type="password" ng-model="pw2" />
-                        <button class="pw_btn" ng-click="pw()">Set Password</button>
-                    </form>
-                    <div class="remove_pw" ng-show="isPassword" ng-click="rmpw()">Remove Password</div>
-                </li>
-            </ul>
+        </div>
+        <div id="room-password-form" ng-show="show_password_form">
+            <form ng-hide="isPassword">
+                <input placeholder="Enter password . . ." type="password" ng-model="pw1" />
+                <input placeholder="Re-enter password . . ." type="password" ng-model="pw2" />
+                <button class="pw_btn" ng-click="pw()">Set Password</button>
+            </form>
+            <div class="remove_pw" ng-show="isPassword" ng-click="rmpw()">Remove Password</div>
         </div>
     </div>
 
+    <button ng-show="isOp" class="exit_btn" ng-click="show_password()">Set password</button>
     <button class="exit_btn" ng-click="partroom()" ng-show="inRoom">Leave Room</button>
-    <button id="test_id"class="exit_btn">PrivateMessage</button>
-
-<!--     <div ng-show="showP">
-        <input id="footer_form" ng-model="pMessage" />
-        <button class="chat_btn create_btn" ng-click="sendPrivateMessage()">Send</button>
-    </div> -->
 
     <form class="create_room">
         <input id="footer_form" ng-model="message" />

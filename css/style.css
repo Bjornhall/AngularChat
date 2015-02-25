@@ -329,15 +329,15 @@ li.ng-binding {
     border-radius: 20px;
     padding: 0.8em;
 }
- 
+
 .exit_btn:hover {
     background-color: rgb(43, 133, 189);
 }
- 
+
 ul#the_room_users li.room_users.ng-binding.ng-scope {
     cursor:pointer;
 }
- 
+
 ul#the_room_users li.room_users.ng-binding.ng-scope:hover {
     color:#287DB2;
 }
@@ -346,4 +346,97 @@ ul#the_room_users li.room_users.ng-binding.ng-scope:before {
     font-family: FontAwesome;
     color: #AFFFED;
 }
+
+#site-menu h2 {
+    display: inline-block;
+    font-size: 1.8em;
+}
+
+#site-menu button#close_chat {
+    margin-top: 1.2em;
+    float: right;
+    color: rgb(66, 139, 202);
+    font-weight: 200;
+    border-radius: 25px;
+    padding: 0.5em 0.8em;
+}
+
+.private-message-form {
+    border-top: solid 1px;
+    margin-top: 1em;
+}
+
+.private-message-form span.ng-binding {
+    font-size: 2em;
+    margin-left: 1em;
+    color: rgb(175, 255, 237);
+}
+
+.private-message-form input {
+    border: none;
+    padding: 0.5em;
+    color: #154B6C;
+    width: 80%;
+    float: left;
+}
+
+.private-message-form button {
+    width: 20%;
+    margin: 0em;
+    border: none;
+    padding: 0.5em 0.6em;
+    background-color: rgb(40, 125, 178);
+    float: left;
+}
+
+.private-message-form button:hover {
+    background-color: rgb(42, 134, 190);
+}
+
+#site-menu div#from {
+    font-weight: 100;
+    text-align: center;
+    font-size: 2em;
+}
+
+.pMessage-container {
+    padding: 5px;
+    margin-top: 1em;
+    background-color: rgb(129, 219, 252);
+    border-radius: 7px;
+}
+
+.chat_operation {
+    display:inline-block;
+}
+
+.chat_operation i {
+    font-size: 1.7em;
+    color:rgb(40, 125, 178);
+}
+
+.chat_operation:hover {
+    cursor:pointer;
+}
+
+#room-password-form input {
+    width:100%;
+    color: rgb(40, 125, 178);
+    border: none;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+#room-password-form button {
+    border: none;
+    width: 100%;
+    margin-bottom: 1em;
+    background-color: rgb(40, 125, 178);
+    padding: 0.5em;
+}
+
+#operations {
+    float:right;
+}
+
 
