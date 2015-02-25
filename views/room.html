@@ -50,12 +50,33 @@
                 </li>
             </ul>
             <ul  id="the_room_users" ng-repeat="user in currentUsers">
+<<<<<<< HEAD
                 <li ng-click="showPmessage(user)">{{ user }}</li>
                 <div id="operations"ng-show="isOp">
                     <div class="chat_operation" ng-click="kick( user )"><i class="fa fa-times"></i></div>
                     <div class="chat_operation" ng-click="ban( user )"><i class="fa fa-ban"></i></div>
                     <div class="chat_operation" ng-click="op( user )"><i class="fa fa-thumbs-up"></i></div>
                 </div>
+=======
+                <li>
+                    <div ng-click="showPmessage(user)">{{ user }}</div>
+                    <div ng-show="isOp">
+                        <div class="kick" ng-click="kick( user )">kick</div>
+                        <div class="ban" ng-click="ban( user )">ban</div>
+                        <div class="op" ng-click="op( user )">op</div>
+                    </div>
+                </li>
+            </ul>
+            <ul>
+                <li ng-show="isOp">
+                    <form ng-hide="isPassword">
+                        Password: <input placeholder="Enter password . . ." type="password" ng-model="pw1" />
+                        Re-enter: <input placeholder="Re-enter password . . ." type="password" ng-model="pw2" />
+                        <button class="pw_btn" ng-click="pw()">Set Password</button>
+                    </form>
+                    <div class="remove_pw" ng-show="isPassword" ng-click="rmpw()">Remove Password</div>
+                </li>
+>>>>>>> a7f2d743f077f76037eca1b097e578b8dbd26dde
             </ul>
         </div>
         <div id="room-password-form" ng-show="show_password_form">

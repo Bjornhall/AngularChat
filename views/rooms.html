@@ -15,8 +15,11 @@
         </ul>
     </div>
 
-    <div class="alert_message animated fadeIn" ng-cloak ng-show="errorMessage != ''">
-        {{errorMessage}}
+    <div class="alert_message animated fadeIn fadeOut" ng-cloak ng-show="errorMessage != ''">
+        {{ errorMessage }}
+    </div>
+    <div class="alert_message animated fadeIn fadeOut" ng-cloak ng-show="roomErrorMessage != ''">
+        {{ roomErrorMessage }}
     </div>
 
     <!--<div ng-click="partRoom()" ng-show="inRoom">Leave Room</div>-->

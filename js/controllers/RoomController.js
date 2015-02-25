@@ -1,5 +1,5 @@
 angular.module('AngChat').controller('RoomController',
-
+    ['$scope', '$location', '$rootScope', '$routeParams', 'socket',
     function($scope, $location, $rootScope, $routeParams, socket){
         $scope.currentRoom = $routeParams.room;
         $scope.currentUser = $routeParams.user;
@@ -66,7 +66,6 @@ angular.module('AngChat').controller('RoomController',
 
                 $rootScope.roomErrorMessage = 'You got kicked!';
                 //alert($rootScope.roomErrorMessage);
-
                 // TODO: henda upp einhverju pop-up og segja að honum hafi verið sparkað..?
                 $rootScope.inRoom = false;
                 $location.path('/rooms/' + $scope.currentUser);
@@ -88,9 +87,8 @@ angular.module('AngChat').controller('RoomController',
                 $scope.isOp = true;
                 $scope.successMessage = 'You got opped by ' + oppingUser;
             } else {
-                //$scope.errorMessage = oppingUser + ' tried to make you op but something failed!';
+                $scope.errorMessage = oppingUser + ' tried to make you op but something failed!';
             }
-            // TODO: do stuff...
         });
 
         socket.on('deopped', function (roomName, deoppedUser, deoppingUser) {
@@ -100,7 +98,6 @@ angular.module('AngChat').controller('RoomController',
             } else {
                 $scope.errorMessage = deoppingUser + ' tried to take away your op rights but failed!';
             }
-            // TODO: do stuff...
         });
 
         $scope.sendmsg = function () {
@@ -184,7 +181,8 @@ angular.module('AngChat').controller('RoomController',
         $scope.ban = function (banUser) {
             socket.emit('ban', {user: banUser, room: $scope.currentRoom}, function (success) {
                 if(success) {
-                     $scope.successMessage = 'You just banned ' + banUser + ' from this room!';
+                    $scope.successMessage = 'You just banned ' + banUser + ' from this room!';
+
                 } else {
                     // TODO: höndla!!!
                     $scope.errorMessage = 'For some reason you were not able to ban ' + banUser + ' from this room!';
@@ -236,11 +234,9 @@ angular.module('AngChat').controller('RoomController',
                 socket.emit('removepassword', {room: $scope.currentRoom}, function (success) {
                     if (success) {
                         $rootScope.isPassword = false;
-                        // TODO:...
                         $scope.successMessage = 'Password removed!';
                     } else {
                         $scope.errorMessage = 'Dang it! Looks like we still have a password!';
-                        // TODO:...
                     }
                 });
             }
@@ -270,5 +266,4 @@ angular.module('AngChat').controller('RoomController',
 
             return false;
         };
-    }
-);
+}]);
