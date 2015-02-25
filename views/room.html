@@ -45,7 +45,8 @@
                 </li>
             </ul>
             <ul  id="the_room_users" ng-repeat="user in currentUsers">
-                <li ng-click="showPmessage(user)">{{ user }}
+                <li>
+                    <div ng-click="showPmessage(user)">{{ user }}</div>
                     <div ng-show="isOp">
                         <div class="kick" ng-click="kick( user )">kick</div>
                         <div class="ban" ng-click="ban( user )">ban</div>
