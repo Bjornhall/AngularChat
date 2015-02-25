@@ -19,14 +19,12 @@
     </div>
 
     <div class="col-md-9 chat">
-        <div ng-repeat="message in messages">
-            <div class="single_message animation-repeat" ng-repeat="message in messages"> <!--bætti við ng-repeat..-->
-                <div class="msg_header clearfix">
-                    <div class="msg_nick">{{ message.nick }}</div>
-                    <div class="msg_timestamp">{{ message.timestamp | date:'MM/dd/yyyy @ h:mma' }}</div>
-                </div>
-                <div class="msg_content"><p>{{ message.message }}</p></div>
+        <div class="single_message animation-repeat" ng-repeat="message in messages">
+            <div class="msg_header clearfix">
+                <div class="msg_nick">{{message.nick}}</div>
+                <div class="msg_timestamp">{{message.timestamp | date:'MM/dd/yyyy @ h:mma'}}</div>
             </div>
+            <div class="msg_content"><p>{{message.message}}</p></div>
         </div>
     </div>
 
