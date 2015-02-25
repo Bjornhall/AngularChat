@@ -6,6 +6,13 @@
         <div>{{msg.from}}</div>
         <div>{{msg.msg}}</div>
     </div>
+    <div class="private-message-form">
+        <div>Send message to: <span>{{pUser}}</span></div>
+        <form action="">
+            <input ng-model="pMessage">
+            <button ng-click="sendPrivateMessage()">Send</button>
+        </form>
+    </div>
 </div>
 
 <div class="container clearfix">
@@ -62,10 +69,10 @@
     <button class="exit_btn" ng-click="partroom()" ng-show="inRoom">Leave Room</button>
     <button id="test_id"class="exit_btn">PrivateMessage</button>
 
-    <div ng-show="showP">
+<!--     <div ng-show="showP">
         <input id="footer_form" ng-model="pMessage" />
         <button class="chat_btn create_btn" ng-click="sendPrivateMessage()">Send</button>
-    </div>
+    </div> -->
 
     <form class="create_room">
         <input id="footer_form" ng-model="message" />

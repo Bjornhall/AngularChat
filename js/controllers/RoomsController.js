@@ -12,6 +12,8 @@ angular.module('AngChat').controller('RoomsController',
             //$scope.password = '';
             $scope.accessRoom = '';
 
+            $rootScope.inRoom = false;
+
             socket.emit('rooms');
             socket.on('roomlist', function(roomlist) {
                 for(var room in roomlist) {
