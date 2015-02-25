@@ -4,6 +4,7 @@ angular.module('AngChat').controller('RoomsController',
             $rootScope.showRoomList = true;
             $rootScope.isPassword = false;
             $rootScope.roomPassword = '';
+            $rootScope.roomErrorMessage = '';
             $scope.roomName = '';
             $scope.currentUser = $routeParams.user;
             //$scope.room = $routeParams.room;
