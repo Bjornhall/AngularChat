@@ -36,6 +36,10 @@ io.sockets.on('connection', function (socket) {
 	//When a user joins a room this processes the request.
 	socket.on('joinroom', function (joinObj, fn) {
 
+		// Added to server - begin
+		var insideRoom = joinObj.insideRoom;
+		// Added to server - end
+
 		var room = joinObj.room;
 		var pass = joinObj.pass;
 		var accepted = true;
@@ -88,7 +92,9 @@ io.sockets.on('connection', function (socket) {
 				//Keep track of the room in the user object.
 				users[socket.username].channels[room] = room;
 				//Send the room information to the client.
-				io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
+				if (insideRoom) { // if statement added to server
+					io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
+				}
 				socket.emit('updatechat', room, rooms[room].messageHistory);
 				socket.emit('updatetopic', room, rooms[room].topic, socket.username);
 				io.sockets.emit('servermessage', "join", room, socket.username);

@@ -1,10 +1,15 @@
 angular.module('AngChat').controller('RoomsController',
     function($scope, $location, $rootScope, $routeParams, socket) {
             $rootScope.showRoomList = true;
+            $rootScope.isPassword = false;
             $scope.roomName = '';
             $scope.currentUser = $routeParams.user;
             //$scope.room = $routeParams.room;
             $scope.rooms = [];
+            $scope.errorMessage = '';
+            $scope.askPassword = false;
+            $scope.password = '';
+            $scope.roomPassword = '';
 
             socket.emit('rooms');
             socket.on('roomlist', function(roomlist) {
@@ -15,6 +20,24 @@ angular.module('AngChat').controller('RoomsController',
                     }
                 }
             });
+
+            $scope.joinRoom = function (roomName) {
+                console.log($scope.roomPassword);
+                socket.emit('joinroom', { room: roomName, password: $scope.roomPassword, insideRoom: false }, function (success, reason) {
+                    if (success) {
+                        $isPassword = false;
+                        $location.path('/room/' + $scope.currentUser + '/' + roomName);
+                    } else {
+                        console.log(reason);
+                        if (reason === 'banned') {
+                            $scope.errorMessage = "You've been banned from " + roomName;
+                        } else if (reason === 'wrong password') {
+                            $scope.isPassword = true;
+                            //alert('room is locked with a password');
+                        }
+                    }
+                });
+            };
 
             exists = function(roomName) {
                 for(var i = 0; i < $scope.rooms.length; i++) {
@@ -29,28 +52,5 @@ angular.module('AngChat').controller('RoomsController',
             $scope.createRoom = function() {
                 $location.path('/room/' + $scope.currentUser + '/' + $scope.roomName);
             }
-
-/*            $scope.joinRoom = function(roomName) {
-
-                if(roomName === undefined) {
-                    $scope.errorMessage = 'Please input a name for your channel!';
-                    // TODO: þarf þetta ?
-                } else {
-                    socket.emit('joinroom', {room: roomName}, function(allowed, reason) {
-                        if(allowed) {
-                            $rootScope.inRoom = true;
-                            $location.path('/room/' + $routeParams.user + '/' + roomName);
-                        } else {
-                            $scope.errorMessage = 'error message'; // TODO: error message
-                        }
-                    });
-                }
-            }
-
-            $scope.partRoom = function() {
-                $rootScope.inRoom = false;
-                socket.emit('partroom', $routeParams.room);
-                $location.path('/rooms/' + $routeParams.user);
-            }*/
     }
 );

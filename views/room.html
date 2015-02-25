@@ -1,32 +1,72 @@
+<div id="site-menu">
+
+    <h2>Private Messages</h2>
+    <button ng-click="closePrivateMsgSidebar()">X</button>
+    <div ng-repeat="msg in pMessages">
+        <div>{{msg.from}}</div>
+        <div>{{msg.msg}}</div>
+    </div>
+</div>
+
 <div class="container clearfix">
     <div class="alert alert-danger" ng-cloak ng-show="errorMessage != ''">
         {{ errorMessage }}
     </div>
 
     <div class="chat_header_container">
-        <h3 class="chat_header float_left">Hi <span class="chat_user">{{currentUser}}</span> - You are currently in : <span class="chat_user">{{ currentRoom }}</span></h3>
+        <h3 class="chat_header float_left">Hi <span class="chat_user">{{ currentUser }}</span> - You are currently in : <span class="chat_user">{{ currentRoom }}</span></h3>
         <h3 class="chat_header chat_users">Users in this room</h4>
     </div>
 
     <div class="col-md-9 chat">
         <div ng-repeat="message in messages">
-            <div class="single_message animation-repeat">
+            <div class="single_message animation-repeat" ng-repeat="message in messages"> <!--bætti við ng-repeat..-->
                 <div class="msg_header clearfix">
-                    <div class="msg_nick">{{message.nick}}</div>
-                    <div class="msg_timestamp">{{message.timestamp | date:'MM/dd/yyyy @ h:mma'}}</div>
+                    <div class="msg_nick">{{ message.nick }}</div>
+                    <div class="msg_timestamp">{{ message.timestamp | date:'MM/dd/yyyy @ h:mma' }}</div>
                 </div>
-                <div class="msg_content">{{message.message}}</div>
+                <div class="msg_content"><p>{{ message.message }}</p></div>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="list_of_things">
-            <ul ng-repeat="user in currentUsers">
-                <li>{{ user }}</li>
+            <ul ng-repeat="op in currentOps">
+                <li>{{ op }}
+                    <div ng-show="isOp">
+                        <div class="deop" ng-click="deop( op )">de-op</div>
+                    </div>
+                </li>
+            </ul>
+            <ul  id="the_room_users" ng-repeat="user in currentUsers">
+                <li ng-click="showPmessage(user)">{{ user }}
+                    <div ng-show="isOp">
+                        <div class="kick" ng-click="kick( user )">kick</div>
+                        <div class="ban" ng-click="ban( user )">ban</div>
+                        <div class="op" ng-click="op( user )">op</div>
+                    </div>
+                </li>
+            </ul>
+            <ul>
+                <li ng-show="isOp">
+                    <form ng-hide="isPassword">
+                        Password: <input placeholder="Enter password . . ." type="password" ng-model="pw1" />
+                        Re-enter: <input placeholder="Re-enter password . . ." type="password" ng-model="pw2" />
+                        <button class="pw_btn" ng-click="pw()">Set Password</button>
+                    </form>
+                    <div class="remove_pw" ng-show="isPassword" ng-click="rmpw()">Remove Password</div>
+                </li>
             </ul>
         </div>
-        <button ng-click="partroom()" ng-show="inRoom">Leave Room</button>
+    </div>
+
+    <button class="exit_btn" ng-click="partroom()" ng-show="inRoom">Leave Room</button>
+    <button id="test_id"class="exit_btn">PrivateMessage</button>
+
+    <div ng-show="showP">
+        <input id="footer_form" ng-model="pMessage" />
+        <button class="chat_btn create_btn" ng-click="sendPrivateMessage()">Send</button>
     </div>
 
     <form class="create_room">

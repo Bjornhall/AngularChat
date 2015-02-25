@@ -31,6 +31,11 @@ Clearfix
     *zoom: 1;
 }
 
+a {
+    text-decoration: none;
+    cursor:pointer;
+}
+
 /*=================================================
 End Clearfix
 ===================================================*/
@@ -62,7 +67,9 @@ End Clearfix
 .chat {
 	height:auto;
 
-	/*border: 1px solid rgba(0,0,0,0.2);*/
+	max-height: 75vh;
+    overflow-y: overlay;
+    overflow-x: hidden;
 }
 
 .login_wrapper {
@@ -90,6 +97,16 @@ End Clearfix
 .ban {
     padding: 4px 2px;
     background-color: red;
+}
+
+.deop,
+.op {
+    padding: 4px 2px;
+    background-color: gray;
+}
+
+.remove_pw {
+    background-color: green;
 }
 
 .chat_header_container {
@@ -157,6 +174,10 @@ End Clearfix
     border-bottom-right-radius: 2px;
 }
 
+.chat_btn:hover {
+    background-color: rgb(43, 133, 189);
+}
+
 .chat_btn.create_btn {
     padding: 0.58em;
 }
@@ -208,14 +229,19 @@ End Clearfix
 
 .single_message .msg_timestamp {
     text-align: right;
-    color:rgba(0,0,0,0.2);;
+    color:rgba(251, 255, 189, 1);
     float:right;
     width:50%;
 }
-
+/*
 .single_message .msg_content {
     color:#fff;
     margin-left: 1em;
+}
+*/
+.single_message .msg_content p{
+    color:#fff;
+    padding-left: 1em;
 }
 
 .create_room {
@@ -230,6 +256,7 @@ End Clearfix
 
 .list_of_things ul {
     float:right;
+    width:100%;
 }
 
 .list_of_things ul li {
@@ -293,5 +320,30 @@ li.ng-binding {
   opacity:1;
 }
 
-
+.exit_btn {
+    display: block;
+    float: right;
+    border: none;
+    background-color: rgb(40, 125, 178);
+    color: white;
+    border-radius: 20px;
+    padding: 0.8em;
+}
+ 
+.exit_btn:hover {
+    background-color: rgb(43, 133, 189);
+}
+ 
+ul#the_room_users li.room_users.ng-binding.ng-scope {
+    cursor:pointer;
+}
+ 
+ul#the_room_users li.room_users.ng-binding.ng-scope:hover {
+    color:#287DB2;
+}
+ul#the_room_users li.room_users.ng-binding.ng-scope:before {
+    content: "\f007";
+    font-family: FontAwesome;
+    color: #AFFFED;
+}
 
