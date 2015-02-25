@@ -21,9 +21,9 @@
 
     <!--<div ng-click="partRoom()" ng-show="inRoom">Leave Room</div>-->
     
-    <form>
-        <input ng-show="isPassword" ng-model="roomPassword" />{{roomPassword}}
-        <button ng-show="isPassword"  ng-click="joinRoom( accessRoom, roomPassword )">Enter</button>
+    <form ng-show="isPassword">
+        <input ng-model="roomPassword" />{{roomPassword}}
+        <button ng-click="joinRoom( accessRoom, roomPassword )">Enter</button>
     </form>
     
     <form class="create_room">

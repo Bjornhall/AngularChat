@@ -6,7 +6,7 @@ module.exports = function(grunt){
 	grunt.initConfig({
 		//pkg: grunt.file.readJSON('package.json'),
 		jshint: {
-			src: ['js/controllers/RoomController.js'],
+			src: ['js/controllers/*.js'],
 			gruntfile: ['Gruntfile.js'],
 			options: {
 				curly:  true,

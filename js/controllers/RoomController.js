@@ -22,6 +22,8 @@ angular.module('AngChat').controller('RoomController',
                 console.log(reason);
                 // TODO: anything?
             } else {
+                $rootScope.roomPassword = '';
+                $rootScope.isPassword = false;
                 $rootScope.inRoom = true;
             }
         });
@@ -91,7 +93,7 @@ angular.module('AngChat').controller('RoomController',
             $scope.pUser = user;
             $scope.showP = true;
             console.log("Another log: " + $scope.pUser);
-        }
+        };
 
         $scope.sendPrivateMessage = function () {
             var sendMessageP = {nick: $scope.pUser, message: $scope.pMessage};
@@ -101,7 +103,7 @@ angular.module('AngChat').controller('RoomController',
 
             socket.emit('privatemsg', sendMessageP);
             $scope.pMessage = '';
-        }
+        };
 
         socket.on('recv_privatemsg', function (nick, message) {
             var pMessage = {from: nick, to: $scope.currentUser, msg: message};
@@ -118,7 +120,7 @@ angular.module('AngChat').controller('RoomController',
         $scope.closePrivateMsgSidebar = function () {
             toggleSidebar();
             isOpen = false;
-        }
+        };
 
         $scope.partroom = function () {
             $rootScope.inRoom = false;
@@ -231,6 +233,6 @@ angular.module('AngChat').controller('RoomController',
             $('#site-wrapper').toggleClass('show-nav');
 
             return false;
-        }
+        };
     }
 );

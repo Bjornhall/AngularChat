@@ -8,8 +8,8 @@ angular.module('AngChat').controller('RoomsController',
             //$scope.room = $routeParams.room;
             $scope.rooms = [];
             $scope.errorMessage = '';
-            $scope.askPassword = false;
-            $scope.password = '';
+            //$scope.askPassword = false;
+            //$scope.password = '';
             $scope.accessRoom = '';
 
             socket.emit('rooms');
@@ -20,23 +20,36 @@ angular.module('AngChat').controller('RoomsController',
                         $scope.rooms.push(room);
                     }
                 }
-
-                console.log($scope.rooms);
             });
 
             $scope.joinRoom = function (roomName, roomPassword) {
-                $rootScope.roomPassword = roomPassword;
-                
-                socket.emit('joinroom', { room: roomName, pass: roomPassword, insideRoom: false }, function (success, reason) {
+                var roomObj = {
+                    room: roomName,
+                    insideRoom: false
+                };
+
+                if ($rootScope.isPassword) {
+                    roomObj.pass = roomPassword;
+                    $rootScope.roomPassword = roomPassword;
+                }
+
+                console.log(roomObj);
+                console.log($rootScope.isPassword);
+
+                socket.emit('joinroom', roomObj, function (success, reason) {
+                    console.log('1');
                     if (success) {
-                        $isPassword = false;
+                    console.log('2');
+                        $scope.isPassword = false;
                         $location.path('/room/' + $scope.currentUser + '/' + roomName);
                     } else {
+                    console.log('3');
                         console.log(reason);
                         if (reason === 'banned') {
                             $scope.errorMessage = "You've been banned from " + roomName;
                         } else if (reason === 'wrong password') {
-                            $scope.isPassword = true;
+                    console.log('4');
+                            $rootScope.isPassword = true;
                             $scope.accessRoom = roomName;
                             //alert('room is locked with a password');
                         }
@@ -44,7 +57,7 @@ angular.module('AngChat').controller('RoomsController',
                 });
             };
 
-            exists = function(roomName) {
+            function exists (roomName) {
                 for(var i = 0; i < $scope.rooms.length; i++) {
                     if($scope.rooms[i] === roomName) {
                         return true;
@@ -56,6 +69,6 @@ angular.module('AngChat').controller('RoomsController',
 
             $scope.createRoom = function() {
                 $location.path('/room/' + $scope.currentUser + '/' + $scope.roomName);
-            }
+            };
     }
 );
