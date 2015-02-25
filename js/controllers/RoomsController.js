@@ -2,6 +2,7 @@ angular.module('AngChat').controller('RoomsController',
     function($scope, $location, $rootScope, $routeParams, socket) {
             $rootScope.showRoomList = true;
             $rootScope.isPassword = false;
+            $rootScope.roomPassword = '';
             $scope.roomName = '';
             $scope.currentUser = $routeParams.user;
             //$scope.room = $routeParams.room;
@@ -9,7 +10,7 @@ angular.module('AngChat').controller('RoomsController',
             $scope.errorMessage = '';
             $scope.askPassword = false;
             $scope.password = '';
-            $scope.roomPassword = '';
+            $scope.accessRoom = '';
 
             socket.emit('rooms');
             socket.on('roomlist', function(roomlist) {
@@ -23,9 +24,10 @@ angular.module('AngChat').controller('RoomsController',
                 console.log($scope.rooms);
             });
 
-            $scope.joinRoom = function (roomName) {
-                console.log($scope.roomPassword);
-                socket.emit('joinroom', { room: roomName, password: $scope.roomPassword, insideRoom: false }, function (success, reason) {
+            $scope.joinRoom = function (roomName, roomPassword) {
+                $rootScope.roomPassword = roomPassword;
+                
+                socket.emit('joinroom', { room: roomName, pass: roomPassword, insideRoom: false }, function (success, reason) {
                     if (success) {
                         $isPassword = false;
                         $location.path('/room/' + $scope.currentUser + '/' + roomName);
@@ -35,6 +37,7 @@ angular.module('AngChat').controller('RoomsController',
                             $scope.errorMessage = "You've been banned from " + roomName;
                         } else if (reason === 'wrong password') {
                             $scope.isPassword = true;
+                            $scope.accessRoom = roomName;
                             //alert('room is locked with a password');
                         }
                     }

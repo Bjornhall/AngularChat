@@ -17,7 +17,7 @@ angular.module('AngChat').controller('RoomController',
         $scope.pw2 = '';
         var isOpen = false;
 
-        socket.emit('joinroom', { room: $scope.currentRoom, insideRoom: true }, function (success, reason) {
+        socket.emit('joinroom', { room: $scope.currentRoom, pass: $rootScope.roomPassword, insideRoom: true }, function (success, reason) {
             if (!success) {
                 console.log(reason);
                 // TODO: anything?

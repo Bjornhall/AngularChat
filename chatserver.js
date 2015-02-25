@@ -92,7 +92,7 @@ io.sockets.on('connection', function (socket) {
 				//Keep track of the room in the user object.
 				users[socket.username].channels[room] = room;
 				//Send the room information to the client.
-				if (insideRoom) { // if statement added to server
+				if (joinObj.insideRoom) { // if statement added to server
 					io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
 				}
 				socket.emit('updatechat', room, rooms[room].messageHistory);
