@@ -17,6 +17,8 @@ angular.module('AngChat').controller('RoomController',
         $scope.pw2 = '';
         var isOpen = false;
 
+        $rootScope.inRoom = true;
+
         var roomObj = {
             room: $scope.currentRoom,
             insideRoom: true
@@ -99,6 +101,10 @@ angular.module('AngChat').controller('RoomController',
 
         $scope.showPmessage = function (user) {
             console.log("Shown the Private shizzle" + " --> " + user);
+            if (!isOpen) {
+                toggleSidebar();
+                isOpen = true;
+            }
             $scope.pUser = user;
             $scope.showP = true;
             console.log("Another log: " + $scope.pUser);
@@ -107,7 +113,7 @@ angular.module('AngChat').controller('RoomController',
         $scope.sendPrivateMessage = function () {
             var sendMessageP = {nick: $scope.pUser, message: $scope.pMessage};
             console.log("this is the private message :" + sendMessageP.nick + " and " + sendMessageP.message);
-            
+
             $scope.pMessages.push(sendMessageP);
 
             socket.emit('privatemsg', sendMessageP);
@@ -119,7 +125,7 @@ angular.module('AngChat').controller('RoomController',
             $scope.pMessages.push(pMessage);
             //alert(message);
             console.log("This is the private message from server: " + pMessage);
-            
+
             if (!isOpen) {
                 toggleSidebar();
                 isOpen = true;
@@ -143,7 +149,7 @@ angular.module('AngChat').controller('RoomController',
                             // TODO: ??
                         }
                     });
-                    
+
                     break;
                 }
 
