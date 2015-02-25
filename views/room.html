@@ -17,13 +17,6 @@
 </div>
 
 <div class="container clearfix">
-    <div class="alert alert-danger" ng-cloak ng-show="errorMessage != ''">
-        {{ errorMessage }}
-    </div>
-
-    <div class="alert alert-success" ng-cloak ng-show="successMessage != ''">
-        {{ successMessage }}
-    </div>
 
     <div class="chat_header_container">
         <h3 class="chat_header float_left">Hi <span class="chat_user">{{ currentUser }}</span> - You are currently in : <span class="chat_user">{{ currentRoom }}</span></h3>
@@ -49,36 +42,16 @@
                     </div>
                 </li>
             </ul>
-            <ul  id="the_room_users" ng-repeat="user in currentUsers">
-<<<<<<< HEAD
+            <ul id="the_room_users" ng-repeat="user in currentUsers">
                 <li ng-click="showPmessage(user)">{{ user }}</li>
                 <div id="operations"ng-show="isOp">
                     <div class="chat_operation" ng-click="kick( user )"><i class="fa fa-times"></i></div>
                     <div class="chat_operation" ng-click="ban( user )"><i class="fa fa-ban"></i></div>
                     <div class="chat_operation" ng-click="op( user )"><i class="fa fa-thumbs-up"></i></div>
                 </div>
-=======
-                <li>
-                    <div ng-click="showPmessage(user)">{{ user }}</div>
-                    <div ng-show="isOp">
-                        <div class="kick" ng-click="kick( user )">kick</div>
-                        <div class="ban" ng-click="ban( user )">ban</div>
-                        <div class="op" ng-click="op( user )">op</div>
-                    </div>
-                </li>
-            </ul>
-            <ul>
-                <li ng-show="isOp">
-                    <form ng-hide="isPassword">
-                        Password: <input placeholder="Enter password . . ." type="password" ng-model="pw1" />
-                        Re-enter: <input placeholder="Re-enter password . . ." type="password" ng-model="pw2" />
-                        <button class="pw_btn" ng-click="pw()">Set Password</button>
-                    </form>
-                    <div class="remove_pw" ng-show="isPassword" ng-click="rmpw()">Remove Password</div>
-                </li>
->>>>>>> a7f2d743f077f76037eca1b097e578b8dbd26dde
             </ul>
         </div>
+
         <div id="room-password-form" ng-show="show_password_form">
             <form ng-hide="isPassword">
                 <input placeholder="Enter password . . ." type="password" ng-model="pw1" />
@@ -93,6 +66,13 @@
     <button class="exit_btn" ng-click="partroom()" ng-show="inRoom">Leave Room</button>
 
     <form class="create_room">
+        <div class="alert_message animated fadeIn" ng-cloak ng-show="errorMessage != ''">
+            {{ errorMessage }}
+        </div>
+
+        <div class="alert_message animated fadeIn" ng-cloak ng-show="successMessage != ''">
+            {{ successMessage }}
+        </div>
         <input id="footer_form" ng-model="message" />
         <button class="chat_btn create_btn" ng-click="sendmsg(room.id)">Send</button>
     </form>
