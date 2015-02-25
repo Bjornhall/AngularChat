@@ -1,6 +1,6 @@
 angular.module('AngChat').controller('RoomsController',
     ['$scope', '$location', '$rootScope', '$routeParams', 'socket',
-    function($scope, $location, $rootScope, $routeParams, socket) {
+    function ($scope, $location, $rootScope, $routeParams, socket) {
             $rootScope.showRoomList = true;
             $rootScope.isPassword = false;
             $rootScope.roomPassword = '';
