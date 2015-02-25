@@ -11,7 +11,7 @@
 
     <div class="list_of_things">
         <ul ng-repeat="room in rooms">
-            <li><a class="chat_list_item" ng-click="joinRoom( room )">{{ room }}</a></li>    
+            <li><a class="chat_list_item" ng-click="joinRoom( room )">{{ room }}</a></li>
         </ul>
     </div>
 
@@ -23,12 +23,13 @@
     </div>
 
     <!--<div ng-click="partRoom()" ng-show="inRoom">Leave Room</div>-->
-    
-    <form ng-show="isPassword">
-        <input ng-model="roomPassword" />{{roomPassword}}
-        <button ng-click="joinRoom( accessRoom, roomPassword )">Enter</button>
-    </form>
-    
+    <div id="room-password-form" ng-show="isPassword">
+        <form>
+            <input ng-model="roomPassword" />{{roomPassword}}
+            <button ng-click="joinRoom( accessRoom, roomPassword )">Enter</button>
+        </form>
+    </div>
+
     <form class="create_room">
         <input id="footer_form" placeholder="Create a new chat room . . . " ng-model="roomName" />
         <button class="chat_btn create_btn" ng-click="createRoom()">Create Room</button>
