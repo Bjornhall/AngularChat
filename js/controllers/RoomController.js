@@ -1,5 +1,5 @@
 angular.module('AngChat').controller('RoomController',
-
+    ['$scope', '$location', '$rootScope', '$routeParams', 'socket',
     function($scope, $location, $rootScope, $routeParams, socket){
         $scope.currentRoom = $routeParams.room;
         $scope.currentUser = $routeParams.user;
@@ -243,5 +243,4 @@ angular.module('AngChat').controller('RoomController',
 
             return false;
         };
-    }
-);
+}]);
