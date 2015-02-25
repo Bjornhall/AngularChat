@@ -82,7 +82,7 @@ angular.module('AngChat').controller('RoomController',
                 $scope.successMessage = 'You got opped by ' + oppingUser;
                 setTimeout(function(){ $scope.successMessage = ''; }, 3000);
             } else {
-                $scope.errorMessage = oppingUser + ' tried to make you op but something failed!';
+                //$scope.errorMessage = oppingUser + ' tried to make you op but something failed!';
                 setTimeout(function(){ $scope.errorMessage = ''; }, 3000);
             }
         });
@@ -93,7 +93,7 @@ angular.module('AngChat').controller('RoomController',
                 $scope.errorMessage = deoppingUser + ' took away your op rights!';
                 setTimeout(function(){ $scope.errorMessage = ''; }, 3000);
             } else {
-                $scope.errorMessage = deoppingUser + ' tried to take away your op rights but failed!';
+                //$scope.errorMessage = deoppingUser + ' tried to take away your op rights but failed!';
                 setTimeout(function(){ $scope.errorMessage = ''; }, 3000);
             }
         });
@@ -193,15 +193,19 @@ angular.module('AngChat').controller('RoomController',
         };
 
         $scope.deop = function (deopUser) {
-            socket.emit('deop', {user: deopUser, room: $scope.currentRoom}, function (success) {
-                if (success) {
-                    $scope.successMessage = 'You just de-opped ' + deopUser;
-                    setTimeout(function(){ $scope.successMessage = ''; }, 3000);
-                } else {
-                    $scope.errorMessage = 'For some reason you could not de-op ' + deopUser;
-                    setTimeout(function(){ $scope.errorMessage = ''; }, 3000);
-                }
-            });
+            if ($scope.currentUser !== deopUser) {
+                socket.emit('deop', {user: deopUser, room: $scope.currentRoom}, function (success) {
+                    if (success) {
+                        $scope.successMessage = 'You just de-opped ' + deopUser;
+                        setTimeout(function(){ $scope.successMessage = ''; }, 3000);
+                    } else {
+                        $scope.errorMessage = 'For some reason you could not de-op ' + deopUser;
+                        setTimeout(function(){ $scope.errorMessage = ''; }, 3000);
+                    }
+                });
+            } else {
+                $scope.errorMessage = 'Please do not try to de-op yourself!';
+            }
         };
 
         $scope.pw = function () {

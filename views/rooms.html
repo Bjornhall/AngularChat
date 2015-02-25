@@ -15,17 +15,17 @@
         </ul>
     </div>
 
-    <div class="alert_message animated fadeIn fadeOut" ng-cloak ng-show="errorMessage != ''">
+    <div class="alert_message animated fadeIn" ng-cloak ng-show="errorMessage != ''">
         {{ errorMessage }}
     </div>
-    <div class="alert_message animated fadeIn fadeOut" ng-cloak ng-show="roomErrorMessage != ''">
+    <div class="alert_message animated fadeIn" ng-cloak ng-show="roomErrorMessage != ''">
         {{ roomErrorMessage }}
     </div>
 
     <!--<div ng-click="partRoom()" ng-show="inRoom">Leave Room</div>-->
     <div id="room-password-form" ng-show="isPassword">
         <form>
-            <input ng-model="roomPassword" />{{roomPassword}}
+            <input ng-model="roomPassword" />
             <button ng-click="joinRoom( accessRoom, roomPassword )">Enter</button>
         </form>
     </div>
