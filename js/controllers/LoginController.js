@@ -1,6 +1,6 @@
 angular.module('AngChat').controller('LoginController',
     ['$scope', '$location', '$rootScope', '$routeParams', 'socket',
-    function($scope, $location, $rootScope, $routeParams, socket) {
+    function ($scope, $location, $rootScope, $routeParams, socket) {
 
     $rootScope.showRoomList = false;
     $rootScope.inRoom = false;

@@ -29,19 +29,19 @@ module.exports = function(grunt){
 				}
 			}
 		},
-		/*concat: {
+		concat: {
 			options: {
 				separator: "\n\n"
 			},
 			dist: {
-				src: ['js/*.js'], // taka úr controllers möppunni...
+				src: ['js/app.js', 'js/controllers/*.js', 'js/script.js'], // taka úr controllers möppunni...
 				dest: 'js/angchat.js' //<%= pkg.name %>.js'
 			}
-		},*/
+		},
 		uglify: {
 			my_target: {
 				files: {
-					'js/angchat.min.js' : ['js/app.js']
+					'js/angchat.min.js' : ['js/angchat.js']
 				}
 			}
 		}

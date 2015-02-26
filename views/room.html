@@ -36,7 +36,7 @@
     <div class="col-md-3">
         <div class="list_of_things clearfix">
             <ul ng-repeat="op in currentOps">
-                <li>{{ op }}
+                <li  ng-click="showPmessage(op)">{{ op }}
                     <div ng-show="isOp">
                         <div class="chat_operations" ng-click="deop( op )">de-op<i class="fa fa-times"></i></div>
                     </div>

@@ -1,3 +1,43 @@
+var AngChatClient = angular.module('AngChat', ['ngRoute']);
+
+AngChatClient.config(
+    function($routeProvider) {
+        $routeProvider
+            .when('/login', {templateUrl: 'views/login.html', controller: 'LoginController'})
+            .when('/rooms/:user/', { templateUrl: 'views/rooms.html', controller: 'RoomsController' })
+            .when('/room/:user/:room/', { templateUrl: 'views/room.html', controller: 'RoomController' })
+            .otherwise({
+                redirectTo: '/login'
+            });
+    }
+);
+
+
+angular.module('AngChat').controller('LoginController',
+    ['$scope', '$location', '$rootScope', '$routeParams', 'socket',
+    function ($scope, $location, $rootScope, $routeParams, socket) {
+
+    $rootScope.showRoomList = false;
+    $rootScope.inRoom = false;
+    $scope.errorMessage = '';
+    $scope.nickname = '';
+
+        $scope.login = function() {
+            if($scope.nickname === '') {
+                $scope.errorMessage = 'Please choose a nickname!';
+            } else {
+                socket.emit ('adduser', $scope.nickname, function(available) {
+                    if(available){
+                        $location.path('/rooms/' + $scope.nickname);
+                        $rootScope.showRoomList = true;
+                    } else {
+                        $scope.errorMessage = 'Unfortunately this nick is taken!. Please choose another nickname';
+                    }
+            });
+        }
+    };
+}]);
+
 angular.module('AngChat').controller('RoomController',
     ['$scope', '$location', '$rootScope', '$routeParams', 'socket',
     function ($scope, $location, $rootScope, $routeParams, socket){
@@ -264,3 +304,105 @@ angular.module('AngChat').controller('RoomController',
             return false;
         };
 }]);
+
+
+angular.module('AngChat').controller('RoomsController',
+    ['$scope', '$location', '$rootScope', '$routeParams', 'socket',
+    function ($scope, $location, $rootScope, $routeParams, socket) {
+            $rootScope.showRoomList = true;
+            $rootScope.isPassword = false;
+            $rootScope.roomPassword = '';
+            $rootScope.roomErrorMessage = '';
+            $scope.roomName = '';
+            $scope.currentUser = $routeParams.user;
+            //$scope.room = $routeParams.room;
+            $scope.rooms = [];
+            $scope.errorMessage = '';
+            //$scope.askPassword = false;
+            //$scope.password = '';
+            $scope.accessRoom = '';
+
+            $rootScope.inRoom = false;
+
+            socket.emit('rooms');
+            socket.on('roomlist', function(roomlist) {
+                for(var room in roomlist) {
+
+                    if(!exists(room)) {
+                        $scope.rooms.push(room);
+                    }
+                }
+            });
+
+            $scope.joinRoom = function (roomName, roomPassword) {
+                var roomObj = {
+                    room: roomName,
+                    insideRoom: false
+                };
+
+                if ($rootScope.isPassword) {
+                    roomObj.pass = roomPassword;
+                    $rootScope.roomPassword = roomPassword;
+                }
+
+                socket.emit('joinroom', roomObj, function (success, reason) {
+                    if (success) {
+                        $scope.isPassword = false;
+                        $location.path('/room/' + $scope.currentUser + '/' + roomName);
+                    } else {
+                        if (reason === 'banned') {
+                            $scope.errorMessage = "You've been banned from " + roomName;
+                        } else if (reason === 'wrong password') {
+                            $rootScope.isPassword = true;
+                            $scope.accessRoom = roomName;
+                            //alert('room is locked with a password');
+                        }
+                    }
+                });
+            };
+
+            function exists (roomName) {
+                for(var i = 0; i < $scope.rooms.length; i++) {
+                    if($scope.rooms[i] === roomName) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            $scope.createRoom = function() {
+                $location.path('/room/' + $scope.currentUser + '/' + $scope.roomName);
+            };
+}]);
+
+
+$( document ).ready(function() {
+    console.log("document ready");
+    $(function() {
+
+      var special = ['reveal', 'top', 'boring', 'perspective', 'extra-pop'];
+
+      // Toggle Nav on Click
+      $('#test_id').click(function() {
+
+        console.log("clicked on user Sidebar Demo");
+        var transitionClass = $(this).data('transition');
+
+        if ($.inArray(transitionClass, special) > -1) {
+          $('body').removeClass();
+          $('body').addClass(transitionClass);
+        } else {
+          $('body').removeClass();
+          $('#site-canvas').removeClass();
+          $('#site-canvas').addClass(transitionClass);
+        }
+
+        $('#site-wrapper').toggleClass('show-nav');
+
+        return false;
+
+      });
+
+    });
+});

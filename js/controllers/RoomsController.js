@@ -1,6 +1,6 @@
 angular.module('AngChat').controller('RoomsController',
     ['$scope', '$location', '$rootScope', '$routeParams', 'socket',
-    function($scope, $location, $rootScope, $routeParams, socket) {
+    function ($scope, $location, $rootScope, $routeParams, socket) {
             $rootScope.showRoomList = true;
             $rootScope.isPassword = false;
             $rootScope.roomPassword = '';
@@ -37,15 +37,11 @@ angular.module('AngChat').controller('RoomsController',
                     $rootScope.roomPassword = roomPassword;
                 }
 
-                console.log(roomObj);
-                console.log($rootScope.isPassword);
-
                 socket.emit('joinroom', roomObj, function (success, reason) {
                     if (success) {
                         $scope.isPassword = false;
                         $location.path('/room/' + $scope.currentUser + '/' + roomName);
                     } else {
-                        console.log(reason);
                         if (reason === 'banned') {
                             $scope.errorMessage = "You've been banned from " + roomName;
                         } else if (reason === 'wrong password') {
